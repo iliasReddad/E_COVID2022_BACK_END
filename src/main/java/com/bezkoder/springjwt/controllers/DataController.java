@@ -24,6 +24,8 @@ public class DataController {
     public List<String> getallEmotions(){return dataService.getAllcategoryofemotion();}
     @GetMapping("/Data/Commentaires")
     public List<String> getallcomments(){return dataService.getAllComments();}
+    @GetMapping("/Data/NoAnnotComment")
+    public List<String> getAllCommentsNoAnnotated(){return dataService.getAllCommentsNoAnnotated();}
     @GetMapping("/Data/numberofcommentaires")
     public int getnumberofallcomments(){return dataService.getnumberofallcomments();}
     @GetMapping("Data/numberofcommentairesbyEmotionPositive")
@@ -42,7 +44,19 @@ public class DataController {
     public List<String> evolutionofcommentsbyEmotion(){return dataService.EvolutionofcommentsbyEmotion();}
 
 
-    @PostMapping(path = "/import")
+    @PutMapping("Data/UpdateComments/{id}&{topic}&{emotion}")
+    public boolean updateComment(@PathVariable("id") long id , @PathVariable("topic") String topic , @PathVariable("emotion") String emotion  ){
+        System.out.println("id : " + id);
+        System.out.println("topic : " + topic);
+        System.out.println("Emotion : " + emotion);
+
+        return dataService.UpdateComment(id,topic,emotion);
+
+
+
+    }
+
+    @PutMapping(path = "/import")
     public void importTransactionsFromExcelToDb(@RequestParam("file") MultipartFile files) {
         System.out.println("called service");
         dataService.importToDb((List<MultipartFile>) files);

@@ -30,6 +30,16 @@ import java.util.List;
     }
     //Get All Comments
     public List<String> getAllComments(){return dataRepository.getAllcommentaire();}
+    //Get All Comments Non Annotated
+    public List<String> getAllCommentsNoAnnotated(){return dataRepository.getAllCommentsNonAnnoted();}
+    //Update Comment Not Annotated
+    public boolean   UpdateComment(Long id , String topic , String emotion){
+        Data data = dataRepository.findById(id).orElse(new Data());
+        data.setTopic(topic);
+        data.setEmotion(emotion);
+         dataRepository.save(data);
+         return true;
+    }
     //Get number of All comments
     public int getnumberofallcomments(){return dataRepository.getAllcommentaire().size();}
    //Get number of comments by Emotio

@@ -38,7 +38,7 @@ public class ContentController {
     }
 
     @PostMapping ("/Update/{id}")
-    public void UpdateContentTitre(@ApiParam("Id") @PathVariable String  id  , @Valid @RequestBody UpdateContentRequest contentRequest){
+    public boolean UpdateContentTitre(@ApiParam("Id") @PathVariable String  id  , @Valid @RequestBody UpdateContentRequest contentRequest){
         System.out.println(contentRequest.getTitre());
         System.out.println(contentRequest.getSous_titre());
         System.out.println(contentRequest.getParagraphe());
@@ -48,6 +48,9 @@ public class ContentController {
 
         Content content  =  contentRepository.findbyctn(id);
 
+        if (contentRequest.getTitre() =="" && contentRequest.getSous_titre() =="" && contentRequest.getParagraphe() ==""  ){
+            return false;
+        }
         if (contentRequest.getTitre() !=""){
             content.setTitre(contentRequest.getTitre());
         }
@@ -58,7 +61,9 @@ public class ContentController {
             content.setParagraphe(contentRequest.getParagraphe());
         }
 
-         contentRepository.save(content);
+        contentRepository.save(content);
+        return true ;
+
 
     }
 
